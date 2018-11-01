@@ -13,11 +13,13 @@ class CreateWebPricesTable extends Migration
      */
     public function up()
     {
-        Schema::create('web_prices', function (Blueprint $table) {
-          $table->increments('id');
-          $table->
-            $table->timestamps();
-        });
+      Schema::create('web_prices', function (Blueprint $table) {
+        $table->increments('id');
+        $table->string('url');
+        $table->decimal('price', 5, 2);
+        $table->timestamps();
+        $table->integer('product_id')->references('id')->on('products');
+      });
     }
 
     /**
@@ -27,6 +29,6 @@ class CreateWebPricesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('web_prices');
+      Schema::dropIfExists('web_prices');
     }
 }
