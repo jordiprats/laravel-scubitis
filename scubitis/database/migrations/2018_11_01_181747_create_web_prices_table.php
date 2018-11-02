@@ -17,8 +17,8 @@ class CreateWebPricesTable extends Migration
         $table->increments('id');
         $table->string('url');
         $table->decimal('price', 5, 2);
-        $table->timestamps();
         $table->integer('product_id')->references('id')->on('products');
+        $table->timestamps();
       });
     }
 
