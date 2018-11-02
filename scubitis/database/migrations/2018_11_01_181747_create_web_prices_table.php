@@ -16,6 +16,8 @@ class CreateWebPricesTable extends Migration
     Schema::create('web_prices', function (Blueprint $table) {
       $table->increments('id');
       $table->string('url');
+      $table->timestamp('data');
+      $table->unique(['url', 'data'], 'url_data_unique');
       $table->decimal('price', 5, 2);
       $table->integer('product_id')->references('id')->on('products');
       $table->timestamps();
