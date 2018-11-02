@@ -6,7 +6,6 @@ class CascoAntiguoScraper implements Scraper
 {
   public function getWebPrice($url)
   {
-    //http://php.net/manual/en/function.get-meta-tags.php
     $c = curl_init($url);
     curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($c, CURLOPT_USERAGENT,'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0');
@@ -22,6 +21,14 @@ class CascoAntiguoScraper implements Scraper
 
     curl_close($c);
 
-    return $html;
+    libxml_use_internal_errors(true);
+    $dom = new \DOMDocument();
+    $dom->loadHTML($html);
+
+    $metas = $dom->getElementsByTagName('meta');
+
+    libxml_use_internal_errors(false);
+
+    return print_r($metas, true);
   }
 }
