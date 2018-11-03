@@ -19,6 +19,6 @@ class GetWebPrice extends Command
   {
     $url=$this->argument('url');
 
-    print(WebPriceController::getWebPrice($url));
+    print(WebPriceController::getWebPriceByURL($url));
   }
 }

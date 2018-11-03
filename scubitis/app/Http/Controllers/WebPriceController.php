@@ -9,7 +9,7 @@ use App\Scrapers\CascoAntiguoScraper;
 
 class WebPriceController extends Controller
 {
-  public static function getWebPrice($url)
+  public static function getWebPriceByURL($url)
   {
     $scraper;
     switch ($url)
@@ -19,6 +19,6 @@ class WebPriceController extends Controller
         break;
     }
 
-    return $scraper->getWebPrice($url);
+    return $scraper->getWebPriceByURL($url);
   }
 }
