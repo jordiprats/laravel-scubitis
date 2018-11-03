@@ -2,7 +2,7 @@
 
 namespace App\Scrapers;
 
-abstract class WebScraper implements Scraper
+abstract class WebScraper
 {
   public abstract function getWebPriceByURL($url);
   public abstract function createProductByURL($url);
