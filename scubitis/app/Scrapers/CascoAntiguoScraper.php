@@ -26,9 +26,14 @@ class CascoAntiguoScraper implements Scraper
     $dom->loadHTML($html);
 
     $metas = $dom->getElementsByTagName('meta');
+    foreach ($metas as $meta)
+    {
+      // <meta property="product:pretax_price:amount" content="163.636364">
+      // <meta property="product:price:amount" content="198">
+      if($meta->getAttribute('property')=='product:price:amount')
+        print($meta->getAttribute('content'));
+    }
 
     libxml_use_internal_errors(false);
-
-    return print_r($metas, true);
   }
 }
