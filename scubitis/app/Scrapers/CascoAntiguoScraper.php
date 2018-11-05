@@ -17,6 +17,7 @@ class CascoAntiguoScraper extends WebScraper
   public function getWebPriceByURL($url)
   {
     $price="";
+    $currency="";
 
     $html=parent::getHTMLByURL($url);
 
@@ -33,6 +34,8 @@ class CascoAntiguoScraper extends WebScraper
       {
         $price = $meta->getAttribute('content');
       }
+
+      //<meta property="product:price:currency" content="EUR">
     }
 
     libxml_use_internal_errors(false);
