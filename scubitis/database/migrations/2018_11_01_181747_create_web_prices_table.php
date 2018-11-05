@@ -19,6 +19,7 @@ class CreateWebPricesTable extends Migration
       $table->timestamp('data');
       $table->unique(['url', 'data'], 'url_data_unique');
       $table->decimal('price', 5, 2);
+      $table->string('currency')->default('EUR');
       $table->integer('product_id')->references('id')->on('products');
       $table->timestamps();
     });
