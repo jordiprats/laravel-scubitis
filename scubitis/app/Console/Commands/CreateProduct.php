@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Http\Controllers\ProductController;
+use App\Product;
 
 class CreateProduct extends Command
 {
@@ -11,7 +13,7 @@ class CreateProduct extends Command
      *
      * @var string
      */
-    protected $signature = 'scubitis:createproduct {url}';
+    protected $signature = 'scubitis:createproduct {title}';
 
     /**
      * The console command description.
@@ -27,7 +29,7 @@ class CreateProduct extends Command
      */
     public function __construct()
     {
-        parent::__construct();
+      parent::__construct();
     }
 
     /**
@@ -37,6 +39,22 @@ class CreateProduct extends Command
      */
     public function handle()
     {
-        //
+      $title=$this->argument('title');
+      $product = Product::where(['title_strcmp' => ProductController::toStrCmp($title)])->first();
+
+      if(!$product)
+      {
+        $product = Product::create([
+          'title'        => $title,
+          'title_strcmp' => ProductController::toStrCmp($title),
+        ]);
+      }
+      else
+      {
+        print("== product already exists:\n");
+      }
+
+      print("\ttitle: ".$product->title."\n");
+      print("\tdescription: ".$product->description."\n");
     }
 }
