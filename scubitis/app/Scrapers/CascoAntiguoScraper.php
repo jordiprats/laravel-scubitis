@@ -16,8 +16,9 @@ class CascoAntiguoScraper extends WebScraper
 
   public function getWebPriceByURL($url)
   {
-    $price="";
-    $currency="";
+    $return = array();
+    $return['price']="";
+    $return['currency']="";
 
     $html=parent::getHTMLByURL($url);
 
@@ -31,15 +32,15 @@ class CascoAntiguoScraper extends WebScraper
       // <meta property="product:pretax_price:amount" content="163.636364">
       // <meta property="product:price:amount" content="198">
       if($meta->getAttribute('property')=='product:price:amount')
-      {
-        $price = $meta->getAttribute('content');
-      }
+        $return['price'] = $meta->getAttribute('content');
 
       //<meta property="product:price:currency" content="EUR">
+      if($meta->getAttribute('property')=='product:price:currency')
+        $return['currency'] = $meta->getAttribute('content');
     }
 
     libxml_use_internal_errors(false);
 
-    return $price;
+    return $return;
   }
 }
