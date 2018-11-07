@@ -40,19 +40,8 @@ class CreateCategory extends Command
     public function handle()
     {
       $name=$this->argument('name');
-      $category = Category::where(['name_strcmp' => CategoryController::toStrCmp($name)])->first();
 
-      if(!$category)
-      {
-        $category = Category::create([
-          'name'        => $name,
-          'name_strcmp' => CategoryController::toStrCmp($name),
-        ]);
-      }
-      else
-      {
-        print("== category already exists:\n");
-      }
+      $category = CategoryController::createOrUpdate($name);
 
       print("\tname: ".$category->name."\n");
     }

@@ -40,19 +40,8 @@ class CreateProduct extends Command
     public function handle()
     {
       $title=$this->argument('title');
-      $product = Product::where(['title_strcmp' => ProductController::toStrCmp($title)])->first();
 
-      if(!$product)
-      {
-        $product = Product::create([
-          'title'        => $title,
-          'title_strcmp' => ProductController::toStrCmp($title),
-        ]);
-      }
-      else
-      {
-        print("== product already exists:\n");
-      }
+      $product = ProductController::createOrUpdate($title);
 
       print("\ttitle: ".$product->title."\n");
       print("\tdescription: ".$product->description."\n");

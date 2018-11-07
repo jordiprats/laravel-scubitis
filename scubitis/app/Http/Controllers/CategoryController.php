@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Category;
 
 class CategoryController extends Controller
 {
@@ -16,5 +17,19 @@ class CategoryController extends Controller
     $output = str_slug($output, '');
 
     return $output;
+  }
+
+  public static function createOrUpdate(string $name)
+  {
+    $category = Category::where(['name_strcmp' => CategoryController::toStrCmp($name)])->first();
+
+    if(!$category)
+    {
+      $category = Category::create([
+        'name'        => $name,
+        'name_strcmp' => CategoryController::toStrCmp($name),
+      ]);
+    }
+    return $category;
   }
 }
