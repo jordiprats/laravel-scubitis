@@ -35,12 +35,13 @@ class GetWebPrice extends Command
       'url'        => $url,
       'price' => $price['price'],
       'currency' => $price['currency'],
-      'product_id' => $product->id
+      'product_id' => $product->id,
+      'data' => Carbon::now(),
     ]);
 
     print("product: ".$product->title."\n");
     print("url: ".$webprice->url."\n");
-    print("timestamp: ".$webprice->data."\n");
+    print("timestamp: ".$webprice->data->diffForHumans()."\n");
     print("price: ".$webprice->price." ".$webprice->currency."\n");
   }
 }
