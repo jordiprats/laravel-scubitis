@@ -24,7 +24,7 @@ class GetWebPrice extends Command
     $title=$this->argument('title');
     $url=$this->argument('url');
 
-    $price = WebPriceController::getWebPriceByURL($url);
+    $productDataArray = WebPriceController::productDataArrayByURL($url);
 
     $product = Product::where(['title_strcmp' => ProductController::toStrCmp($title)])->first();
 
@@ -33,8 +33,8 @@ class GetWebPrice extends Command
 
     $webprice = WebPrice::create([
       'url'        => $url,
-      'price'      => $price['price'],
-      'currency'   => $price['currency'],
+      'price'      => $productDataArray['price'],
+      'currency'   => $productDataArray['currency'],
       'product_id' => $product->id,
       'data'       => Carbon::now(),
     ]);

@@ -4,8 +4,7 @@ namespace App\Scrapers;
 
 abstract class WebScraper
 {
-  public abstract function getWebPriceByURL($url);
-  public abstract function createProductByURL($url);
+  public abstract function productDataArrayByURL($url);
 
   public $cached_urls = array();
 

@@ -4,9 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\Scrapers\Scraper;
+use App\Scrapers\CascoAntiguoScraper;
 
 class ProductController extends Controller
 {
+  public static function createProductByURL($url)
+  {
+    $scraper;
+    switch ($url)
+    {
+      case (preg_match('/cascoantiguo.*/', $url) ? true : false) :
+        $scraper = new CascoAntiguoScraper();
+        break;
+    }
+
+    $product_data = $scraper->productDataArrayByURL($url);
+
+    print_r($product_data);
+  }
+
   public static function toStrCmp(string $string)
   {
     $conectors = array('-', ',');
