@@ -33,10 +33,10 @@ class GetWebPrice extends Command
 
     $webprice = WebPrice::create([
       'url'        => $url,
-      'price' => $price['price'],
-      'currency' => $price['currency'],
+      'price'      => $price['price'],
+      'currency'   => $price['currency'],
       'product_id' => $product->id,
-      'data' => Carbon::now(),
+      'data'       => Carbon::now(),
     ]);
 
     print("product: ".$product->title."\n");
