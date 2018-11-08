@@ -48,6 +48,8 @@ class CascoAntiguoScraper extends WebScraper
       $tokenized_url = explode("/", $url);
       $product_data['category_name'] = $tokenized_url[5];
 
+      $product_data['website'] = 'CascoAntiguo';
+
       $cached_products[$url] = $product_data;
     }
 

@@ -17,4 +17,20 @@ class Product extends Model
   {
     return $this->hasMany(WebPrice::class);
   }
+
+  public function getMinpriceAttribute()
+  {
+    //return $this->webprices->where('price', $this->webprices->min('price'))->first();
+    return $this->webprices->min('price');
+  }
+
+  public function getMaxpriceAttribute()
+  {
+    return $this->webprices->max('price');
+  }
+
+  public function getAveragepriceAttribute()
+  {
+    return $this->webprices->avg('price');
+  }
 }

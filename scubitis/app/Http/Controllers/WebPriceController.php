@@ -23,13 +23,14 @@ class WebPriceController extends Controller
     return $scraper->getWebPriceByURL($url);
   }
 
-  public static function create($url, $product_id, $price, $currency)
+  public static function create($url, $product_id, $price, $currency, $website)
   {
     $webprice = WebPrice::create([
       'url'        => $url,
       'price'      => $price,
       'currency'   => $currency,
       'product_id' => $product_id,
+      'website'    => $website,
       'data'       => Carbon::now(),
     ]);
 

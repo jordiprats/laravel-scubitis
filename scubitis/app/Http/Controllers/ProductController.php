@@ -9,6 +9,20 @@ use App\Scrapers\CascoAntiguoScraper;
 
 class ProductController extends Controller
 {
+  public function index(Request $request)
+  {
+    $products=Product::paginate(50);
+    return view('products.list',compact('products'))->with('i', ($request->input('page', 1) - 1) * 50);
+  }
+
+  public function show($id)
+  {
+    $product = Product::find($id);
+
+    return view('products.show')
+            ->with('product', $product);
+  }
+
   public static function createOrUpdateProductByURL($url)
   {
     $scraper;
@@ -25,7 +39,7 @@ class ProductController extends Controller
 
     $product = ProductController::createOrUpdate($product_data['title'], $product_data['description'], $category->id);
 
-    $webprice = WebPriceController::create($url, $product->id, $product_data['price'], $product_data['currency']);
+    $webprice = WebPriceController::create($url, $product->id, $product_data['price'], $product_data['currency'], $product_data['website']);
 
     return $product;
   }

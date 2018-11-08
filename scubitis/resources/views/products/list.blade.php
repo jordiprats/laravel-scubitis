@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header"><h1>{{ __('Dashboard') }}</h1></div>
+                <div class="card-header"><h1>Products list</h1></div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -15,7 +15,13 @@
                         {{ session()->forget('status') }}
                     @endif
 
-                    <h2></h2>
+                    <h1>Products</h1>
+                    <ul>
+                      @foreach ($products as $product)
+                        <li><a href="{{ route('products.show', ['id' => $product->id] ) }}">{{ $product->title }}</a></li>
+                      @endforeach
+                    </ul>
+                    {!! $products->links('pagination') !!}
                 </div>
             </div>
         </div>
