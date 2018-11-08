@@ -14,9 +14,6 @@
                         </div>
                         {{ session()->forget('status') }}
                     @endif
-                    <h2>Description</h2>
-                    <img src="{{ $product->image_url }}" />
-                    {{ $product->description }}
 
                     <h2>Prices</h2>
                     <ul>
@@ -25,6 +22,16 @@
                       <li>Average price: {{ $product->averageprice }}</li>
                       {{-- on <a href="{{ $product->minprice->url }}">{{ $product->minprice->website }}</a> - {{ $product->minprice->data }} --}}
                     </ul>
+
+                    <h2>Description</h2>
+                    {{ $product->description }}
+                    
+                    @if($product->image_url!=null)
+                    <img class="img-rounded img-thumbnail" src="{{ $product->image_url }}" />
+                    <hr />
+                    @endif
+
+
 
                 </div>
             </div>
