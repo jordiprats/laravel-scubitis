@@ -32,6 +32,10 @@ class CascoAntiguoScraper extends WebScraper
         if($meta->getAttribute('property')=='og:description')
           $product_data['description'] = $meta->getAttribute('content');
 
+        //<meta property="og:image" content="https://www.cascoantiguo.com/22357-large_default/xs-compact-pro-mc9-sc-regulator.jpg">
+        if($meta->getAttribute('property')=='og:image')
+          $product_data['image_url'] = $meta->getAttribute('content');
+
         // <meta property="product:pretax_price:amount" content="163.636364">
         // <meta property="product:price:amount" content="198">
         if($meta->getAttribute('property')=='product:price:amount')

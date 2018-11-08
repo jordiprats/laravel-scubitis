@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
       $table->string('title')->unique();
       $table->string('title_strcmp')->unique();
       $table->text('description')->nullable();
+      $table->string('image_url')->nullable();
       $table->integer('category_id')->references('id')->on('categories')->nullable();
       $table->timestamps();
     });

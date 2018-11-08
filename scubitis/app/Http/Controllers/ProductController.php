@@ -37,7 +37,7 @@ class ProductController extends Controller
 
     $category = CategoryController::createOrUpdate($product_data['category_name']);
 
-    $product = ProductController::createOrUpdate($product_data['title'], $product_data['description'], $category->id);
+    $product = ProductController::createOrUpdate($product_data['title'], $product_data['description'], $category->id, $product_data['image_url']);
 
     $webprice = WebPriceController::create($url, $product->id, $product_data['price'], $product_data['currency'], $product_data['website']);
 
@@ -56,7 +56,7 @@ class ProductController extends Controller
     return $output;
   }
 
-  public static function createOrUpdate(string $title, string $description = null, $category_id = null)
+  public static function createOrUpdate(string $title, string $description = null, $category_id = null, $image_url = null)
   {
     $product = Product::where(['title_strcmp' => ProductController::toStrCmp($title)])->first();
 
@@ -66,6 +66,7 @@ class ProductController extends Controller
         'title'        => $title,
         'title_strcmp' => ProductController::toStrCmp($title),
         'description'  => $description,
+        'image_url'    => $image_url,
         'category_id'  => $category_id,
       ]);
     }
