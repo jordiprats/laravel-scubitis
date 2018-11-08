@@ -15,6 +15,7 @@
                         {{ session()->forget('status') }}
                     @endif
                     <h2>Description</h2>
+                    <img src="{{ $product->image_url }}" />
                     {{ $product->description }}
 
                     <h2>Prices</h2>
