@@ -21,7 +21,15 @@ class ProductController extends Controller
 
     $product_data = $scraper->productDataArrayByURL($url);
 
-    print_r($product_data);
+    $category = CategoryController::createOrUpdate($product_data['category_name']);
+
+    $product = ProductController::createOrUpdate($product_data['title'], $product_data['description'], $category->id);
+
+    $webprice = WebPriceController::create($url, $product->id, $product_data['price'], $product_data['currency']);
+
+    print($category."\n");
+    print($product."\n");
+    print($webprice."\n");
   }
 
   public static function toStrCmp(string $string)
@@ -36,7 +44,7 @@ class ProductController extends Controller
     return $output;
   }
 
-  public static function createOrUpdate(string $title, string $description = null, string $category_id = null)
+  public static function createOrUpdate(string $title, string $description = null, $category_id = null)
   {
     $product = Product::where(['title_strcmp' => ProductController::toStrCmp($title)])->first();
 

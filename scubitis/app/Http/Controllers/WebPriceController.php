@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\WebPrice;
 use App\Scrapers\Scraper;
 use App\Scrapers\CascoAntiguoScraper;
+use Carbon\Carbon;
 
 class WebPriceController extends Controller
 {
@@ -20,5 +21,18 @@ class WebPriceController extends Controller
     }
 
     return $scraper->getWebPriceByURL($url);
+  }
+
+  public static function create($url, $product_id, $price, $currency)
+  {
+    $webprice = WebPrice::create([
+      'url'        => $url,
+      'price'      => $price,
+      'currency'   => $currency,
+      'product_id' => $product_id,
+      'data'       => Carbon::now(),
+    ]);
+
+    return $webprice;
   }
 }

@@ -24,8 +24,8 @@ class CascoAntiguoScraper extends WebScraper
         // <meta property="og:title" content="XS COMPACT PRO MC9 SC REGULATOR » Buy Online | Casco Antiguo Shop">
         if($meta->getAttribute('property')=='og:title')
         {
-          $content = explode("»", $meta->getAttribute('content'));
-          $product_data['title'] = $content[0];
+          preg_match('/^[a-zA-Z0-9? ><;,{}[\]\-_+=!@#$%\^&*|\']*/', $meta->getAttribute('content'), $content);
+          $product_data['title'] = trim($content[0]);
         }
 
         // <meta property="og:description" content="The MC9-SEAL CHAMBER 1ST stage is environmentally sealed, protecting it against icing in cold water and against contamination from particulate matter in silty conditions.">
