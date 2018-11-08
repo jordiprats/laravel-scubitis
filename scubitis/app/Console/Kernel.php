@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+      //
     ];
 
     /**
@@ -24,8 +24,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+      // cada 4 hores
+      $schedule->command('scubitis:updateprices')
+                ->cron('0 */4 * * *');
     }
 
     /**
@@ -35,8 +36,8 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+      $this->load(__DIR__.'/Commands');
 
-        require base_path('routes/console.php');
+      require base_path('routes/console.php');
     }
 }
