@@ -9,7 +9,7 @@ use App\Scrapers\CascoAntiguoScraper;
 
 class ProductController extends Controller
 {
-  public static function createProductByURL($url)
+  public static function createOrUpdateProductByURL($url)
   {
     $scraper;
     switch ($url)
@@ -27,9 +27,7 @@ class ProductController extends Controller
 
     $webprice = WebPriceController::create($url, $product->id, $product_data['price'], $product_data['currency']);
 
-    print($category."\n");
-    print($product."\n");
-    print($webprice."\n");
+    return $product;
   }
 
   public static function toStrCmp(string $string)

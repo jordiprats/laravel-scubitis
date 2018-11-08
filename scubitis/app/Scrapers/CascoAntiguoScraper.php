@@ -24,7 +24,7 @@ class CascoAntiguoScraper extends WebScraper
         // <meta property="og:title" content="XS COMPACT PRO MC9 SC REGULATOR » Buy Online | Casco Antiguo Shop">
         if($meta->getAttribute('property')=='og:title')
         {
-          preg_match('/^[a-zA-Z0-9? ><;,{}[\]\-_+=!@#$%\^&*|\']*/', $meta->getAttribute('content'), $content);
+          preg_match('/^[a-zA-Z0-9? ><;,{}[\]\-_+=!@#$%\.\^&*|\']*/', $meta->getAttribute('content'), $content);
           $product_data['title'] = trim($content[0]);
         }
 

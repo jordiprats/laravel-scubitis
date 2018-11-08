@@ -40,7 +40,11 @@ class CreateProductByURL extends Command
     {
       $url=$this->argument('url');
 
-      $product = ProductController::createProductByURL($url);
+      $product = ProductController::createOrUpdateProductByURL($url);
 
+      if($product)
+      {
+        print("Product succesfully imported\n");
+      }
     }
 }
