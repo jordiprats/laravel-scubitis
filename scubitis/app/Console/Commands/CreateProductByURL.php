@@ -44,7 +44,7 @@ class CreateProductByURL extends Command
 
       if($product)
       {
-        print("Product succesfully imported\n");
+        print($product->title." - succesfully imported\n");
       }
     }
 }
