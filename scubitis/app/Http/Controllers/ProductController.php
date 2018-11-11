@@ -26,7 +26,7 @@ class ProductController extends Controller
     $chart->labels($webprices->pluck('data'));
     foreach(WebPrice::distinct()->select('website')->where('product_id', '=', $product->id)->groupBy('website')->get() as $website)
     {
-      $chart->dataset('My dataset 1', 'line', $webprices->pluck('price'));
+      //$chart->dataset('My dataset 1', 'line', $webprices->pluck('price'));
       //WIP
     }
 
