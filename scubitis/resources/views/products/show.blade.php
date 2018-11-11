@@ -29,6 +29,13 @@
                     </div>
                     {{-- <img src="{{ $product->image_url }}" /> --}}
 
+                    @if($product->image_url!=null)
+                    <img class="img-rounded img-thumbnail" src="{{ $product->image_url }}" />
+                    <hr />
+                    @endif
+
+
+
                 </div>
             </div>
         </div>
