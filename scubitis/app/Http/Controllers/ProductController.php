@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\WebPrice;
 use App\Scrapers\Scraper;
 use App\Scrapers\CascoAntiguoScraper;
+use App\Charts\WebPricesChart;
 
 class ProductController extends Controller
 {
@@ -19,8 +21,18 @@ class ProductController extends Controller
   {
     $product = Product::find($id);
 
+    $chart = new WebPricesChart;
+    $chart->height(500);
+    $chart->labels($webprices->pluck('data'));
+    foreach(WebPrice::distinct()->select('website')->where('product_id', '=', $product->id)->groupBy('website')->get() as $website)
+    {
+      $chart->dataset('My dataset 1', 'line', $webprices->pluck('price'));
+      //WIP
+    }
+
     return view('products.show')
-            ->with('product', $product);
+            ->with('product', $product)
+            ->with('chart', $chart);
   }
 
   public static function createOrUpdateProductByURL($url)

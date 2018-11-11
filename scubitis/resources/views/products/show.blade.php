@@ -15,7 +15,6 @@
                         {{ session()->forget('status') }}
                     @endif
                     <h2>Description</h2>
-                    <img src="{{ $product->image_url }}" />
                     {{ $product->description }}
 
                     <h2>Prices</h2>
@@ -25,10 +24,15 @@
                       <li>Average price: {{ $product->averageprice }}</li>
                       {{-- on <a href="{{ $product->minprice->url }}">{{ $product->minprice->website }}</a> - {{ $product->minprice->data }} --}}
                     </ul>
+                    <div>
+                      {!! $chart->container() !!}
+                    </div>
+                    {{-- <img src="{{ $product->image_url }}" /> --}}
 
                 </div>
             </div>
         </div>
     </div>
 </div>
+{!! $chart->script() !!}
 @endsection
