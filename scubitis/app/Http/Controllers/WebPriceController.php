@@ -25,6 +25,7 @@ class WebPriceController extends Controller
 
   public static function createOrUpdate($url, $product_id, $price, $currency, $website)
   {
+    // TODO: compobar els dos últims items
     $webprice = WebPrice::where([ 'url' => $url, 'product_id' => $product_id])->orderBy('data', 'DESC')->first();
     if(
       ($webprice) &&
