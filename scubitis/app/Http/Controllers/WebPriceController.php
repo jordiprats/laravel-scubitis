@@ -25,8 +25,12 @@ class WebPriceController extends Controller
 
   public static function createOrUpdate($url, $product_id, $price, $currency, $website)
   {
-    $webprice = WebPrice::where([ 'url' => $url, 'product_id' => $product_id])->orderBy('data', 'DESC');
-    if(($webprice) && ($webprice->price==$price) && ($webprice->currency == $currency))
+    $webprice = WebPrice::where([ 'url' => $url, 'product_id' => $product_id])->orderBy('data', 'DESC')->first();
+    if(
+      ($webprice) &&
+      ($webprice->price==$price) &&
+      ($webprice->currency == $currency)
+      )
     {
       $webprice->data=Carbon::now();
 
