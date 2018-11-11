@@ -8,6 +8,7 @@ use App\WebPrice;
 use App\Scrapers\Scraper;
 use App\Scrapers\CascoAntiguoScraper;
 use App\Charts\WebPricesChart;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -19,15 +20,15 @@ class ProductController extends Controller
 
   public function show($id)
   {
-    $product = Product::find($id);
+    $product = Product::findOrFail($id);
 
     $chart = new WebPricesChart;
     $chart->height(500);
-    $chart->labels($webprices->pluck('data'));
+    $chart->labels($product->webprices->pluck('data'));
     foreach(WebPrice::distinct()->select('website')->where('product_id', '=', $product->id)->groupBy('website')->get() as $website)
     {
-      //$chart->dataset('My dataset 1', 'line', $webprices->pluck('price'));
-      //WIP
+      Log::info($website->website);
+      $chart->dataset($website->website, 'line', WebPrice::where([ ['product_id', '=', $id], ['website', '=', $website->website]])->get()->pluck('price'));
     }
 
     return view('products.show')
