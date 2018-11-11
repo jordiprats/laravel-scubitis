@@ -52,7 +52,7 @@ class ProductController extends Controller
 
     $product = ProductController::createOrUpdate($product_data['title'], $product_data['description'], $category->id, $product_data['image_url']);
 
-    $webprice = WebPriceController::create($url, $product->id, $product_data['price'], $product_data['currency'], $product_data['website']);
+    $webprice = WebPriceController::createOrUpdate($url, $product->id, $product_data['price'], $product_data['currency'], $product_data['website']);
 
     return $product;
   }
