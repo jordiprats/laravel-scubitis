@@ -36,9 +36,10 @@ class WebPriceController extends Controller
       ($last_webprices->first()->currency==$currency)
       )
     {
-      $last_webprices->first()->data=Carbon::now();
+      $webprice = $last_webprices->first();
+      $webprice->data=Carbon::now();
 
-      $last_webprices->first()->save();
+      $webprice->save();
     }
     else
     {
