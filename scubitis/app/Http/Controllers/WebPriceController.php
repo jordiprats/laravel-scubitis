@@ -25,12 +25,15 @@ class WebPriceController extends Controller
 
   public static function createOrUpdate($url, $product_id, $price, $currency, $website)
   {
-    // TODO: compobar els dos últims items
-    $webprice = WebPrice::where([ 'url' => $url, 'product_id' => $product_id])->orderBy('data', 'DESC')->first();
+    $last_webprices = WebPrice::where([ 'url' => $url, 'product_id' => $product_id])->orderBy('data', 'DESC')->limit(2)->get();
+    $last_webprices_count = $last_webprices->count();
+
     if(
-      ($webprice) &&
-      ($webprice->price==$price) &&
-      ($webprice->currency == $currency)
+      ($last_webprices_count==2) &&
+      ($last_webprices->first()->price==$last_webprices->last()->price) &&
+      ($last_webprices->first()->currency == $last_webprices->last()->currency) &&
+      ($last_webprices->first()->price==$price) &&
+      ($last_webprices->first()->currency==$currency)
       )
     {
       $webprice->data=Carbon::now();
