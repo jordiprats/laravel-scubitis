@@ -2,8 +2,6 @@
 
 namespace App\Scrapers;
 
-//TODO - skel
-
 class ScubaStoreScraper extends WebScraper
 {
   public $cached_products = array();
@@ -31,12 +29,10 @@ class ScubaStoreScraper extends WebScraper
         }
 
         //<meta name="description" content="Cressi Guantes 3.5 mm Ultrastrecht - Negro.Modelo en el que prima su máxima elasticidad, fabricado en neopreno de baja densidad y forro en , buceo"/>
-        if($meta->getAttribute('property')=='og:description')
+        if($meta->getAttribute('name')=='description')
           $product_data['description'] = $meta->getAttribute('content');
 
-
-
-        //TODO
+        //TODO - imatge
         if($meta->getAttribute('property')=='og:image')
           $product_data['image_url'] = $meta->getAttribute('content');
 
@@ -54,6 +50,8 @@ class ScubaStoreScraper extends WebScraper
 
         if($meta->getAttribute('itemprop')=='priceCurrency')
           $product_data['currency'] = $meta->getAttribute('content');
+
+        //TODO - categoria
       }
 
       libxml_use_internal_errors(false);
