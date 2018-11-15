@@ -52,7 +52,7 @@ class UpdateWebPrices extends Command
             $product = ProductController::createOrUpdateProductByURL($webprice->url);
             if($product)
             {
-              print($product->title." -  webprice succesfully updated\n");
+              print($product->title." (".$webprice->website.") -  webprice succesfully updated\n");
             }
           }
 

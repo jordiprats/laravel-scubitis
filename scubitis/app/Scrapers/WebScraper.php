@@ -8,6 +8,19 @@ abstract class WebScraper
 
   public $cached_urls = array();
 
+  public static function getWebScraper($url)
+  {
+    switch ($url)
+    {
+      case (preg_match('/cascoantiguo.*/', $url) ? true : false) :
+        return new CascoAntiguoScraper();
+        break;
+      case (preg_match('/scubastore.*/', $url) ? true : false) :
+        return new ScubaStoreScraper();
+        break;
+    }
+  }
+
   public function getHTMLByURL($url)
   {
     if(!isset($cached_urls[$url]))

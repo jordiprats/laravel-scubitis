@@ -2,9 +2,7 @@
 
 namespace App\Scrapers;
 
-//TODO - skel
-
-class ScubaStoreScraper extends WebScraper
+class CascoAntiguoScraper extends WebScraper
 {
   public $cached_products = array();
 
@@ -23,42 +21,38 @@ class ScubaStoreScraper extends WebScraper
       $metas = $dom->getElementsByTagName('meta');
       foreach ($metas as $meta)
       {
-        //<meta name="title" content="Cressi Guantes 3.5 mm Ultrastrecht Negro, Scubastore" />
+        // <meta property="og:title" content="XS COMPACT PRO MC9 SC REGULATOR » Buy Online | Casco Antiguo Shop">
         if($meta->getAttribute('property')=='og:title')
         {
           preg_match('/^[a-zA-Z0-9? ><;,{}[\]\-\/_+=!@#$%\.\^&*|\']*/', $meta->getAttribute('content'), $content);
           $product_data['title'] = trim($content[0]);
         }
 
-        //<meta name="description" content="Cressi Guantes 3.5 mm Ultrastrecht - Negro.Modelo en el que prima su máxima elasticidad, fabricado en neopreno de baja densidad y forro en , buceo"/>
+        // <meta property="og:description" content="The MC9-SEAL CHAMBER 1ST stage is environmentally sealed, protecting it against icing in cold water and against contamination from particulate matter in silty conditions.">
         if($meta->getAttribute('property')=='og:description')
           $product_data['description'] = $meta->getAttribute('content');
 
-
-
-        //TODO
+        //<meta property="og:image" content="https://www.cascoantiguo.com/22357-large_default/xs-compact-pro-mc9-sc-regulator.jpg">
         if($meta->getAttribute('property')=='og:image')
           $product_data['image_url'] = $meta->getAttribute('content');
 
-          // <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-  				// 	<meta itemprop="sku" content="74558" />
-  				// 	<meta itemprop="priceCurrency" content="EUR" />
-  				// 	<meta itemprop="price" content="17.95" />
-  				// 	<meta itemprop="seller" content="scubastore" />
-  				// 	<link itemprop="itemCondition" href="http://schema.org/NewCondition"/>
-  				// 	<link itemprop="availability" href="http://schema.org/InStock"/>
-  				// </span>
-
-        if($meta->getAttribute('itemprop')=='price')
+        // <meta property="product:pretax_price:amount" content="163.636364">
+        // <meta property="product:price:amount" content="198">
+        if($meta->getAttribute('property')=='product:price:amount')
           $product_data['price'] = $meta->getAttribute('content');
 
-        if($meta->getAttribute('itemprop')=='priceCurrency')
+        //<meta property="product:price:currency" content="EUR">
+        if($meta->getAttribute('property')=='product:price:currency')
           $product_data['currency'] = $meta->getAttribute('content');
       }
 
       libxml_use_internal_errors(false);
 
-      $product_data['website'] = 'scubastore';
+      //https://www.cascoantiguo.com/en/scuba/fins/sport-pro-fin-subacqua
+      $tokenized_url = explode("/", $url);
+      $product_data['category_name'] = $tokenized_url[5];
+
+      $product_data['website'] = 'CascoAntiguo';
 
       $cached_products[$url] = $product_data;
     }

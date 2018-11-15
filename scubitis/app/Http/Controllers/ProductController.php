@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\WebPrice;
 use App\Scrapers\Scraper;
-use App\Scrapers\CascoAntiguoScraper;
+use App\Scrapers\WebScraper;
 use App\Charts\WebPricesChart;
 use Illuminate\Support\Facades\Log;
 
@@ -38,19 +38,28 @@ class ProductController extends Controller
 
   public static function createOrUpdateProductByURL($url)
   {
-    $scraper;
-    switch ($url)
-    {
-      case (preg_match('/cascoantiguo.*/', $url) ? true : false) :
-        $scraper = new CascoAntiguoScraper();
-        break;
-    }
+    $scraper = WebScraper::getWebScraper($url);
 
     $product_data = $scraper->productDataArrayByURL($url);
 
-    $category = CategoryController::createOrUpdate($product_data['category_name']);
+    $related_webprice = WebPrice::where(['url' => $url])->first();
+    if($related_webprice)
+    {
+      $product = $related_webprice->product;
 
-    $product = ProductController::createOrUpdate($product_data['title'], $product_data['description'], $category->id, $product_data['image_url']);
+      $category = $product->category;
+    }
+    else
+    {
+      if(isset($product_data['title']) && isset($product_data['description']) && $product_data['category_name'])
+      {
+        $category = CategoryController::createOrUpdate($product_data['category_name']);
+
+        $product = ProductController::createOrUpdate($product_data['title'], $product_data['description'], $category->id, $product_data['image_url']);
+      }
+      else return null;
+
+    }
 
     $webprice = WebPriceController::createOrUpdate($url, $product->id, $product_data['price'], $product_data['currency'], $product_data['website']);
 

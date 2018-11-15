@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\WebPrice;
-use App\Scrapers\Scraper;
-use App\Scrapers\CascoAntiguoScraper;
+use App\Scrapers\WebScraper;
 use Carbon\Carbon;
 
 class WebPriceController extends Controller
@@ -21,6 +20,17 @@ class WebPriceController extends Controller
     }
 
     return $scraper->getWebPriceByURL($url);
+  }
+
+  public static function createOrUpdateProductByURL($product_id, $url)
+  {
+    $scraper = WebScraper::getWebScraper($url);
+
+    $product_data = $scraper->productDataArrayByURL($url);
+
+    $webprice = WebPriceController::createOrUpdate($url, $product_id, $product_data['price'], $product_data['currency'], $product_data['website']);
+
+    return $webprice;
   }
 
   public static function createOrUpdate($url, $product_id, $price, $currency, $website)

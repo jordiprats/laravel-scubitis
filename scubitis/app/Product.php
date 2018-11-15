@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Product extends Model
 {
+  use Searchable;
+
   protected $guarded = [];
 
   public function category()
@@ -32,5 +35,13 @@ class Product extends Model
   public function getAveragepriceAttribute()
   {
     return $this->webprices->avg('price');
+  }
+
+  public function toSearchableArray()
+  {
+    $array = $this->toArray();
+
+    //Index 'products' created with fields: `title`,`title_strcmp`,`description`,`image_url`
+    return array('id' => $array['id'], 'title' => $array['title'], 'description' => $array['description']);
   }
 }

@@ -46,5 +46,9 @@ class CreateProductByURL extends Command
       {
         print($product->title." - succesfully imported\n");
       }
+      else
+      {
+        print("Unable to fetch product info based on this URL");
+      }
     }
 }
