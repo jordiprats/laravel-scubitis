@@ -52,10 +52,10 @@ class UpdateWebPrices extends Command
             $product = ProductController::createOrUpdateProductByURL($webprice->url);
             if($product)
             {
-              print($product->title." (".$webprice->website.") -  webprice succesfully updated\n");
+              print($product->title." (".$webprice->url.") -  webprice succesfully updated\n");
             }
+            sleep(rand (1, 10));
           }
-
         }
       }
     }

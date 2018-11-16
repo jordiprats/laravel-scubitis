@@ -42,7 +42,7 @@ class WebPriceController extends Controller
       ($last_webprices_count==2) &&
       ($last_webprices->first()->price==$last_webprices->last()->price) &&
       ($last_webprices->first()->currency == $last_webprices->last()->currency) &&
-      ($last_webprices->first()->price==$price) &&
+      ($last_webprices->first()->price==doubleval($price)) &&
       ($last_webprices->first()->currency==$currency)
       )
     {
@@ -55,7 +55,7 @@ class WebPriceController extends Controller
     {
       $webprice = WebPrice::create([
         'url'        => $url,
-        'price'      => $price,
+        'price'      => doubleval($price),
         'currency'   => $currency,
         'product_id' => $product_id,
         'website'    => $website,
