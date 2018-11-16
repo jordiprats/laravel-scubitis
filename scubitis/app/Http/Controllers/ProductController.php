@@ -12,6 +12,19 @@ use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
+
+  public function autocomplete(Request $request)
+  {
+    $data = Product::search($request->input('query'))->get();
+    return response()->json($data);
+  }
+
+  public function search(Request $request)
+  {
+    $products = Product::search($request->input('q'))->paginate(10);
+    return view('products.list',compact('products'))->with('i', ($request->input('page', 1) - 1) * 50);
+  }
+
   public function index(Request $request)
   {
     $products=Product::paginate(50);

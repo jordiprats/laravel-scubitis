@@ -16,3 +16,5 @@ Route::get('/', function () {
 });
 
 Route::resource('/products', 'ProductController');
+Route::get('/search/products/autocomplete', 'ProductController@autocomplete')->name('autocomplete');
+Route::get('/search/produts', 'ProductController@search')->name('products.search');
