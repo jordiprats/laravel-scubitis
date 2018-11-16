@@ -38,7 +38,7 @@ class ProductController extends Controller
     $chart = new WebPricesChart;
     $chart->height(500);
 
-    Log::info(WebPrice::distinct()->where([['product_id', '=', $id]])->orderBy('data')->get()->pluck('data'));
+    Log::info(WebPrice::distinct()->select('data')->where([['product_id', '=', $id]])->orderBy('data')->get()->pluck('data'));
     //$chart->labels(WebPrice::distinct()->where([['product_id', '=', $id]])->orderBy('data')->get()->pluck('data'));
     foreach(WebPrice::distinct()->select('website')->where('product_id', '=', $product->id)->groupBy('website')->get() as $website)
     {

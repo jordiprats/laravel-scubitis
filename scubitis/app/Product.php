@@ -21,6 +21,11 @@ class Product extends Model
     return $this->hasMany(WebPrice::class);
   }
 
+  public function getCurrentminpriceAttribute()
+  {
+    return WebPrice::where([ ['product_id', '=', $this->id] ])->orderBy('price', 'ASC')->orderBy('data', 'DESC')->first();
+  }
+
   public function getMinpriceAttribute()
   {
     return $this->webprices->where('price', $this->webprices->min('price'))->sortByDesc('data')->first();
