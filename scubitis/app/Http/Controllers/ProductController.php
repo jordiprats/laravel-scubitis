@@ -24,11 +24,14 @@ class ProductController extends Controller
 
     $chart = new WebPricesChart;
     $chart->height(500);
-    $chart->labels($product->webprices->pluck('data'));
+
+    Log::info(WebPrice::distinct()->where([['product_id', '=', $id]])->orderBy('data')->get()->pluck('data'));
+    //$chart->labels(WebPrice::distinct()->where([['product_id', '=', $id]])->orderBy('data')->get()->pluck('data'));
     foreach(WebPrice::distinct()->select('website')->where('product_id', '=', $product->id)->groupBy('website')->get() as $website)
     {
-      Log::info($website->website);
-      $chart->dataset($website->website, 'line', WebPrice::where([ ['product_id', '=', $id], ['website', '=', $website->website]])->get()->pluck('price'));
+      Log::info(WebPrice::where([ ['product_id', '=', $id], ['website', '=', $website->website]])->get()->pluck('price', 'data')->toArray());
+
+      $chart->dataset($website->website, 'line', WebPrice::where([ ['product_id', '=', $id], ['website', '=', $website->website]])->get()->pluck('price', 'data')->toArray());
     }
 
     return view('products.show')
