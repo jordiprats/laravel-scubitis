@@ -19,8 +19,8 @@
 
                     <h2>Prices</h2>
                     <ul>
-                      <li>Minimun price: {{ $product->minprice }}</li>
-                      <li>Maximum price: {{ $product->maxprice }}</li>
+                      <li>Minimun price: {{ $product->minprice->price }} by {{ $product->minprice->website }} on {{ $product->minprice->data }}</li>
+                      <li>Maximum price: {{ $product->maxprice->price }} by {{ $product->maxprice->website }} on {{ $product->maxprice->data }}</li>
                       <li>Average price: {{ $product->averageprice }}</li>
                       {{-- on <a href="{{ $product->minprice->url }}">{{ $product->minprice->website }}</a> - {{ $product->minprice->data }} --}}
                     </ul>

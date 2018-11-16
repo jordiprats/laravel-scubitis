@@ -23,13 +23,14 @@ class Product extends Model
 
   public function getMinpriceAttribute()
   {
-    //return $this->webprices->where('price', $this->webprices->min('price'))->first();
-    return $this->webprices->min('price');
+    return $this->webprices->where('price', $this->webprices->min('price'))->sortByDesc('data')->first();
+    //return $this->webprices->min('price');
   }
 
   public function getMaxpriceAttribute()
   {
-    return $this->webprices->max('price');
+    return $this->webprices->where('price', $this->webprices->max('price'))->sortByDesc('data')->first();
+    //return $this->webprices->max('price');
   }
 
   public function getAveragepriceAttribute()
