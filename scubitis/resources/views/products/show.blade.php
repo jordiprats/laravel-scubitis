@@ -19,11 +19,11 @@
 
                     <h2>Prices</h2>
                     <ul>
-                      <li>Current minimun price: {{ $product->currentminprice->price }} by {{ $product->currentminprice->website }} on {{ $product->currentminprice->data }}</li>
-                      <li>Minimun price: {{ $product->minprice->price }} by {{ $product->minprice->website }} on {{ $product->minprice->data }}</li>
-                      <li>Maximum price: {{ $product->maxprice->price }} by {{ $product->maxprice->website }} on {{ $product->maxprice->data }}</li>
+                      <li>Current minimun price: {{ $product->currentminwebprice->price }} by <a href="{{ $product->currentminwebprice->url }}">{{ $product->currentminwebprice->website }}</a> on {{ $product->currentminwebprice->data }}</li>
+                      <li>Minimun price: {{ $product->minwebprice->price }} by <a href="{{ $product->minwebprice->url }}">{{ $product->minwebprice->website }}</a> on {{ $product->minwebprice->data }}</li>
+                      <li>Maximum price: {{ $product->maxwebprice->price }} by <a href="{{ $product->maxwebprice->url }}">{{ $product->maxwebprice->website }}</a> on {{ $product->maxwebprice->data }}</li>
                       <li>Average price: {{ $product->averageprice }}</li>
-                      {{-- on <a href="{{ $product->minprice->url }}">{{ $product->minprice->website }}</a> - {{ $product->minprice->data }} --}}
+                      {{-- on <a href="{{ $product->minwebprice->url }}">{{ $product->minwebprice->website }}</a> - {{ $product->minwebprice->data }} --}}
                     </ul>
                     <div>
                       {!! $chart->container() !!}

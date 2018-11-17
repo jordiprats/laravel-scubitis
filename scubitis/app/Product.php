@@ -21,18 +21,19 @@ class Product extends Model
     return $this->hasMany(WebPrice::class);
   }
 
-  public function getCurrentminpriceAttribute()
+  public function getCurrentminwebpriceAttribute()
   {
+    //TODO: rework
     return WebPrice::where([ ['product_id', '=', $this->id] ])->orderBy('price', 'ASC')->orderBy('data', 'DESC')->first();
   }
 
-  public function getMinpriceAttribute()
+  public function getMinwebpriceAttribute()
   {
     return $this->webprices->where('price', $this->webprices->min('price'))->sortByDesc('data')->first();
     //return $this->webprices->min('price');
   }
 
-  public function getMaxpriceAttribute()
+  public function getMaxwebpriceAttribute()
   {
     return $this->webprices->where('price', $this->webprices->max('price'))->sortByDesc('data')->first();
     //return $this->webprices->max('price');
