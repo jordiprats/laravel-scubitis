@@ -23,8 +23,8 @@ class Product extends Model
 
   public function getCurrentminwebpriceAttribute()
   {
-    //TODO: encara no m'agrada
-    return WebPrice::where([ ['product_id', '=', $this->id] ])->orderBy('data', 'DESC')->get()->sortBy('price')->first();
+    $numero_web_prices = WebPrice::distinct()->select('website')->where([ ['product_id', '=', $this->id] ])->get()->count();
+    return WebPrice::where([ ['product_id', '=', $this->id] ])->orderBy('data', 'DESC')->limit($numero_web_prices)->get()->sortBy('price')->first();
   }
 
   public function getMinwebpriceAttribute()
