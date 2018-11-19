@@ -22,7 +22,7 @@ class CascoAntiguoScraper extends WebScraper
       if($span->getAttribute('class')=='textonaunciomercadillo')
       {
         $promo_code_data = array();
-        $promo_code_data['promo_id'] = strip_tags($dom->saveXML($div, LIBXML_NOEMPTYTAG));
+        $promo_code_data['promo_id'] = strip_tags($dom->saveXML($span, LIBXML_NOEMPTYTAG));
         $promo_code_data['website'] = $this->website_name;
 
         return $promo_code_data;
