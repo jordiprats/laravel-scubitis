@@ -6,6 +6,29 @@ class CascoAntiguoScraper extends WebScraper
 {
   public $cached_products = array();
 
+  public function getPromoCodes($url)
+  {
+    $promo_codes = array();
+
+    $html=parent::getHTMLByURL($url);
+
+    libxml_use_internal_errors(true);
+    // $dom = new \DOMDocument();
+    // $dom->loadHTML($html);
+    //
+    // $divs = $dom->getElementsByTagName('div');
+    // foreach ($divs as $div)
+    // {
+    //   if($meta->getAttribute('class')=='barra_black_friday')
+    //   {
+    //     $promo_codes.append(strip_tags($dom->saveXML($div, LIBXML_NOEMPTYTAG)));
+    //   }
+    // }
+    libxml_use_internal_errors(false);
+
+    return $promo_codes;
+  }
+
   public function productDataArrayByURL($url)
   {
     if(!isset($cached_products[$url]))
