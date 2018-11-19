@@ -21,28 +21,6 @@ class CascoAntiguoScraper extends WebScraper
       return $promo_code_data;
     }
 
-
-    // libxml_use_internal_errors(true);
-    // $dom = new \DOMDocument();
-    // $dom->loadHTML($html);
-    //
-    // $spans = $dom->getElementsByTagName('span');
-    // foreach ($spans as $span)
-    // {
-    //   //<span class="textonaunciomercadillo">-12% Descuento Cod. “FRIDIVE”</span>
-    //   if($span->getAttribute('class')=='textonaunciomercadillo')
-    //   {
-    //     $promo_code_data = array();
-    //     $promo_id_raw = strip_tags($dom->saveXML($span, LIBXML_NOEMPTYTAG));
-    //     $promo_id = preg_replace('/[^a-zA-Z0-9? ><;,{}[\]\-\/_+=!@#$%\.\^&*|\']*/', '', $promo_id_raw);
-    //     $promo_code_data['promo_id'] = trim($promo_id);
-    //     $promo_code_data['website'] = $this->website_name;
-    //
-    //     return $promo_code_data;
-    //   }
-    // }
-    // libxml_use_internal_errors(false);
-
     return null;
   }
 
