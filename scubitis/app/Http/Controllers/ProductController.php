@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\WebPrice;
-use App\Scrapers\Scraper;
 use App\Scrapers\WebScraper;
 use App\Charts\WebPricesChart;
 use Illuminate\Support\Facades\Log;

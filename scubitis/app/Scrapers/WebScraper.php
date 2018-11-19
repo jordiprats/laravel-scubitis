@@ -23,7 +23,7 @@ abstract class WebScraper
 
   public function getRandomUserAgent()
   {
-    return array_rand($user_agents, 1);
+    return array_rand($this->user_agents, 1);
   }
 
   public static function getWebScraper($url)
@@ -43,7 +43,7 @@ abstract class WebScraper
   {
     if(!isset($cached_urls[$url]))
     {
-      $user_agent = getRandomUserAgent();
+      $user_agent = $this->getRandomUserAgent();
       Log::info($user_agent);
       $c = curl_init($url);
       curl_setopt($c, CURLOPT_RETURNTRANSFER, true);

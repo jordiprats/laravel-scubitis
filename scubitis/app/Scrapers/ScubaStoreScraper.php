@@ -5,6 +5,7 @@ namespace App\Scrapers;
 class ScubaStoreScraper extends WebScraper
 {
   public $cached_products = array();
+  public $website_name = 'scubastore';
 
   public function getPromoCodes($url)
   {
@@ -19,13 +20,13 @@ class ScubaStoreScraper extends WebScraper
     $divs = $dom->getElementsByTagName('div');
     foreach ($divs as $div)
     {
-      if($meta->getAttribute('class')=='barra_black_friday')
+      if($div->getAttribute('class')=='barra_black_friday')
       {
         $promo_code_data = array();
-        $promo_code_data['promo_id'] = datstrip_tags($dom->saveXML($div, LIBXML_NOEMPTYTAG));
-        $promo_code_data['website'] = 'scubastore';
-        
-        $promo_codes.append($promo_code_data);
+        $promo_code_data['promo_id'] = strip_tags($dom->saveXML($div, LIBXML_NOEMPTYTAG));
+        $promo_code_data['website'] = $this->website_name;
+
+        $promo_codes[] = $promo_code_data;
       }
     }
     libxml_use_internal_errors(false);
@@ -83,7 +84,7 @@ class ScubaStoreScraper extends WebScraper
 
       libxml_use_internal_errors(false);
 
-      $product_data['website'] = 'scubastore';
+      $product_data['website'] = $this->website_name;
 
       $cached_products[$url] = $product_data;
     }

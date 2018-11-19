@@ -5,25 +5,31 @@ namespace App\Scrapers;
 class CascoAntiguoScraper extends WebScraper
 {
   public $cached_products = array();
+  public $website_name = 'CascoAntiguo';
 
-  public function getPromoCodes($url)
+  
   {
     $promo_codes = array();
 
     $html=parent::getHTMLByURL($url);
 
     libxml_use_internal_errors(true);
-    // $dom = new \DOMDocument();
-    // $dom->loadHTML($html);
-    //
-    // $divs = $dom->getElementsByTagName('div');
-    // foreach ($divs as $div)
-    // {
-    //   if($meta->getAttribute('class')=='barra_black_friday')
-    //   {
-    //     $promo_codes.append(strip_tags($dom->saveXML($div, LIBXML_NOEMPTYTAG)));
-    //   }
-    // }
+    //<span class="textonaunciomercadillo">-12% Descuento Cod. “FRIDIVE”</span>
+    $dom = new \DOMDocument();
+    $dom->loadHTML($html);
+
+    $spans = $dom->getElementsByTagName('span');
+    foreach ($spans as $span)
+    {
+      if($span->getAttribute('class')=='textonaunciomercadillo')
+      {
+        $promo_code_data = array();
+        $promo_code_data['promo_id'] = strip_tags($dom->saveXML($div, LIBXML_NOEMPTYTAG));
+        $promo_code_data['website'] = $this->website_name;
+
+        $promo_codes[] = $promo_code_data;
+      }
+    }
     libxml_use_internal_errors(false);
 
     return $promo_codes;
@@ -75,7 +81,7 @@ class CascoAntiguoScraper extends WebScraper
       $tokenized_url = explode("/", $url);
       $product_data['category_name'] = $tokenized_url[5];
 
-      $product_data['website'] = 'CascoAntiguo';
+      $product_data['website'] = $this->website_name;
 
       $cached_products[$url] = $product_data;
     }

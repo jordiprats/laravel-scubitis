@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Scrapers\WebScraper;
+use App\PromoCode;
 
 class PromoCodeController extends Controller
 {
-  public function createOrUpdatePromoCodeByURL($url)
+  public static function createOrUpdatePromoCodeByURL($url)
   {
     $scraper = WebScraper::getWebScraper($url);
 
@@ -18,10 +20,11 @@ class PromoCodeController extends Controller
 
       if(!$promo_code)
       {
+        $discount = isset($promo_code_data['discount'])?$promo_code_data['discount']:null;
         $promo_code = PromoCode::create([
           'promo_id' => $promo_code_data['promo_id'],
           'website'  => $promo_code_data['website'],
-          'discount' => $promo_code_data['discount'],
+          'discount' => $discount,
         ]);
       }
       return $promo_code;
