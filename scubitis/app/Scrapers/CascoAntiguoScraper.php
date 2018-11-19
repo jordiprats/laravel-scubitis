@@ -12,13 +12,13 @@ class CascoAntiguoScraper extends WebScraper
     $html=parent::getHTMLByURL($url);
 
     libxml_use_internal_errors(true);
-    //<span class="textonaunciomercadillo">-12% Descuento Cod. “FRIDIVE”</span>
     $dom = new \DOMDocument();
     $dom->loadHTML($html);
 
     $spans = $dom->getElementsByTagName('span');
     foreach ($spans as $span)
     {
+      //<span class="textonaunciomercadillo">-12% Descuento Cod. “FRIDIVE”</span>
       if($span->getAttribute('class')=='textonaunciomercadillo')
       {
         $promo_code_data = array();

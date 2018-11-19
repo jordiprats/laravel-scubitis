@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Log;
 
 abstract class WebScraper
 {
-  public abstract function productDataArrayByURL($url);
-  //public abstract function getPromoCode($url);
-
   public $cached_urls = array();
 
   public $user_agents = [
@@ -65,4 +62,7 @@ abstract class WebScraper
 
     return $cached_urls[$url];
   }
+
+  abstract public function productDataArrayByURL($url);
+  abstract public function getPromoCode($url);
 }

@@ -18,6 +18,7 @@ class ScubaStoreScraper extends WebScraper
     $divs = $dom->getElementsByTagName('div');
     foreach ($divs as $div)
     {
+      //<div class="barra_black_friday" style="display:block" ><p><strong>BLACK FRIDAY -15% Code:BF2018</strong></p></div>
       if($div->getAttribute('class')=='barra_black_friday')
       {
         $promo_code_data = array();

@@ -75,6 +75,7 @@ class ProductController extends Controller
       else return null;
 
     }
+
     $promo_code_data = $scraper->getPromoCode($url);
 
     if($promo_code_data!=null)
