@@ -7,7 +7,7 @@ class CascoAntiguoScraper extends WebScraper
   public $cached_products = array();
   public $website_name = 'CascoAntiguo';
 
-  
+  public function getPromoCodes($url)
   {
     $promo_codes = array();
 
