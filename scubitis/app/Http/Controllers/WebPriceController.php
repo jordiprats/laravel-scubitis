@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\WebPrice;
+use App\PromoCode;
 use App\Scrapers\WebScraper;
 use Carbon\Carbon;
 
@@ -34,7 +35,7 @@ class WebPriceController extends Controller
     {
       $promo_code = PromoCode::where(['promo_id' => $promo_code_data['promo_id'], 'website' => $promo_code_data['website']])->first();
 
-      if($promo_code->discount && $promo_code->discount > 0 && $promo_code->discount < 100)
+      if($promo_code && $promo_code->discount && $promo_code->discount > 0 && $promo_code->discount < 100)
       {
         $product_data['price'] -= ($product_data['price'] / 100)*$promo_code->discount;
       }

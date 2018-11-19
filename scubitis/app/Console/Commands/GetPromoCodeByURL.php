@@ -5,21 +5,21 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Http\Controllers\PromoCodeController;
 
-class GetPromoCodesByURL extends Command
+class GetPromoCodeByURL extends Command
 {
   /**
    * The name and signature of the console command.
    *
    * @var string
    */
-  protected $signature = 'scubitis:getpromocodesbyurl {url}';
+  protected $signature = 'scubitis:getpromocodebyurl {url}';
 
   /**
    * The console command description.
    *
    * @var string
    */
-  protected $description = 'get promotional codes by URL';
+  protected $description = 'get promotional code by URL';
 
   /**
    * Create a new command instance.
