@@ -76,8 +76,8 @@ class ProductController extends Controller
 
     }
 
+    // si hi ha promocions fem update del preu
     $promo_code_data = $scraper->getPromoCode($url);
-
     if($promo_code_data!=null)
     {
       $promo_code = PromoCode::where(['promo_id' => $promo_code_data['promo_id'], 'website' => $promo_code_data['website']])->first();
