@@ -75,6 +75,17 @@ class ProductController extends Controller
       else return null;
 
     }
+    $promo_code_data = $scraper->getPromoCode($url);
+
+    if($promo_code_data!=null)
+    {
+      $promo_code = PromoCode::where(['promo_id' => $promo_code_data['promo_id'], 'website' => $promo_code_data['website']])->first();
+
+      if($promo_code->discount && $promo_code->discount > 0 && $promo_code->discount < 100)
+      {
+        $product_data['price'] -= ($product_data['price'] / 100)*$promo_code->discount;
+      }
+    }
 
     $webprice = WebPriceController::createOrUpdate($url, $product->id, $product_data['price'], $product_data['currency'], $product_data['website']);
 

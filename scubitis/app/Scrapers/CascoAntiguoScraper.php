@@ -7,14 +7,11 @@ class CascoAntiguoScraper extends WebScraper
   public $cached_products = array();
   public $website_name = 'CascoAntiguo';
 
-  public function getPromoCodes($url)
+  public function getPromoCode($url)
   {
-    $promo_codes = array();
-
     $html=parent::getHTMLByURL($url);
 
     libxml_use_internal_errors(true);
-    //<span class="textonaunciomercadillo">-12% Descuento Cod. “FRIDIVE”</span>
     $dom = new \DOMDocument();
     $dom->loadHTML($html);
 
@@ -27,12 +24,12 @@ class CascoAntiguoScraper extends WebScraper
         $promo_code_data['promo_id'] = strip_tags($dom->saveXML($div, LIBXML_NOEMPTYTAG));
         $promo_code_data['website'] = $this->website_name;
 
-        $promo_codes[] = $promo_code_data;
+        return $promo_code_data;
       }
     }
     libxml_use_internal_errors(false);
 
-    return $promo_codes;
+    return null;
   }
 
   public function productDataArrayByURL($url)

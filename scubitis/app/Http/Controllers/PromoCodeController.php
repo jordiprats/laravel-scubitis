@@ -12,9 +12,9 @@ class PromoCodeController extends Controller
   {
     $scraper = WebScraper::getWebScraper($url);
 
-    $promo_codes = $scraper->getPromoCodes($url);
+    $promo_code_data = $scraper->getPromoCode($url);
 
-    foreach($promo_codes as $promo_code_data)
+    if($promo_code_data!=null)
     {
       $promo_code = PromoCode::where(['promo_id' => $promo_code_data['promo_id'], 'website' => $promo_code_data['website']])->first();
 
@@ -29,5 +29,6 @@ class PromoCodeController extends Controller
       }
       return $promo_code;
     }
+    return null;
   }
 }
