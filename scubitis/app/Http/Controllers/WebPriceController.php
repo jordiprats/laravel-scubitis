@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\WebPrice;
-use App\PromoCode;
 use App\Scrapers\WebScraper;
+use Illuminate\Http\Request;
+use App\PromoCode;
 use Carbon\Carbon;
+use App\WebPrice;
 
 class WebPriceController extends Controller
 {

@@ -2,6 +2,8 @@
 
 namespace App\Scrapers;
 
+use Illuminate\Support\Facades\Log;
+
 class CascoAntiguoScraper extends WebScraper
 {
   public $cached_products = array();
@@ -12,36 +14,53 @@ class CascoAntiguoScraper extends WebScraper
     $html=parent::getHTMLByURL($url);
     $promo_code_data = array();
 
-    //img/stickers/8/stickerblackgrande.gif
-    //if(preg_match('/\/img\/stickers\/8\/stickerblackgrande.gif/', $html))
-    if(preg_match('/\/img\/stickers\/8\/stickerblackgrande.gif/', $html) && !preg_match('/\/img\/stickers\/9\/stickerblackgrande.gif/', $html))
+    //product-cover
+    // <script>
+    // $('div.product-cover')
+    // .append("<span style='text-align:left;display: inline-block; position: absolute; left: 6px; bottom: 6px;'><span style=';color:;font-family:Arial;font-size:9px;'><img style=\"box-shadow:unset;width:120%\" src='/img/stickers/8/stickerblackgrande.gif' /> </span></span>");
+    // </script>
+
+    libxml_use_internal_errors(true);
+    $dom = new \DOMDocument();
+    $dom->loadHTML($html);
+
+    $scripts = $dom->getElementsByTagName('script');
+    foreach ($scripts as $script)
     {
-      $promo_code_data['website'] = $this->website_name;
+      $data_script = $dom->saveXML($script, LIBXML_NOEMPTYTAG);
+      Log::info($data_script);
 
-      libxml_use_internal_errors(true);
-      $dom = new \DOMDocument();
-      $dom->loadHTML($html);
-
-      $spans = $dom->getElementsByTagName('span');
-      foreach ($spans as $span)
-      {
-
-        if($span->getAttribute('class')=='textonaunciomercadillo')
+      if(
+          (preg_match('/div\.product-cover/', $data_script)) &&
+          (preg_match('/\/img\/stickers\/8\/stickerblackgrande.gif/', $data_script))
+        )
         {
-          $promo_id_raw = strip_tags($dom->saveXML($span, LIBXML_NOEMPTYTAG));
-          $promo_id = preg_replace('/[^a-zA-Z0-9? ><;,{}[\]\-\/_+=!@#$:%\.\^&*|\']*/', '', $promo_id_raw);
-          $promo_code_data['promo_id'] = $promo_id;
+          Log::info('found');
+          $promo_code_data['website'] = $this->website_name;
+          $promo_code_data['promo_id'] = 'unknown promo';
 
-          return $promo_code_data;
+          $dom = new \DOMDocument();
+          $dom->loadHTML($html);
+
+          $spans = $dom->getElementsByTagName('span');
+          foreach ($spans as $span)
+          {
+
+            if($span->getAttribute('class')=='textonaunciomercadillo')
+            {
+              $promo_id_raw = strip_tags($dom->saveXML($span, LIBXML_NOEMPTYTAG));
+              $promo_id = preg_replace('/[^a-zA-Z0-9? ><;,{}[\]\-\/_+=!@#$:%\.\^&*|\']*/', '', $promo_id_raw);
+              $promo_code_data['promo_id'] = $promo_id;
+
+              Log::info($promo_id);
+              libxml_use_internal_errors(false);
+              return $promo_code_data;
+            }
+          }
         }
-      }
-      libxml_use_internal_errors(false);
-
-      $promo_code_data['promo_id'] = 'unknown promo';
-
-      return $promo_code_data;
     }
 
+    libxml_use_internal_errors(false);
     return null;
   }
 
