@@ -41,7 +41,7 @@ class Product extends Model
 
   public function getAveragepriceAttribute()
   {
-    return $this->webprices->avg('price');
+    return round(doubleval($this->webprices->avg('price')),2);
   }
 
   public function toSearchableArray()

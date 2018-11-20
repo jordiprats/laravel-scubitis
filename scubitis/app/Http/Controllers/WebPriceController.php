@@ -41,6 +41,8 @@ class WebPriceController extends Controller
       }
     }
 
+    $product_data['price'] = round(doubleval($product_data['price']),2);
+
     $webprice = WebPriceController::createOrUpdate($url, $product_id, $product_data['price'], $product_data['currency'], $product_data['website']);
 
     return $webprice;
@@ -55,7 +57,7 @@ class WebPriceController extends Controller
       ($last_webprices_count==2) &&
       ($last_webprices->first()->price==$last_webprices->last()->price) &&
       ($last_webprices->first()->currency == $last_webprices->last()->currency) &&
-      ($last_webprices->first()->price==doubleval($price)) &&
+      ($last_webprices->first()->price==round(doubleval($price),2)) &&
       ($last_webprices->first()->currency==$currency)
       )
     {
@@ -68,7 +70,7 @@ class WebPriceController extends Controller
     {
       $webprice = WebPrice::create([
         'url'        => $url,
-        'price'      => doubleval($price),
+        'price'      => round(doubleval($price),2),
         'currency'   => $currency,
         'product_id' => $product_id,
         'website'    => $website,

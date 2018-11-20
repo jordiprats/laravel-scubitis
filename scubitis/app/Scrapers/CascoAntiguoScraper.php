@@ -10,13 +10,34 @@ class CascoAntiguoScraper extends WebScraper
   public function getPromoCode($url)
   {
     $html=parent::getHTMLByURL($url);
+    $promo_code_data = array();
 
     //img/stickers/8/stickerblackgrande.gif
     //if(preg_match('/\/img\/stickers\/8\/stickerblackgrande.gif/', $html))
-    if(preg_match('/\/img\/stickers\/8\/stickerblackgrande.gif/', $html))
+    if(preg_match('/\/img\/stickers\/8\/stickerblackgrande.gif/', $html) && !preg_match('/\/img\/stickers\/9\/stickerblackgrande.gif/', $html))
     {
-      $promo_code_data['promo_id'] = 'FRIDIVE 12%';
       $promo_code_data['website'] = $this->website_name;
+
+      libxml_use_internal_errors(true);
+      $dom = new \DOMDocument();
+      $dom->loadHTML($html);
+
+      $spans = $dom->getElementsByTagName('span');
+      foreach ($spans as $span)
+      {
+
+        if($span->getAttribute('class')=='textonaunciomercadillo')
+        {
+          $promo_id_raw = strip_tags($dom->saveXML($span, LIBXML_NOEMPTYTAG));
+          $promo_id = preg_replace('/[^a-zA-Z0-9? ><;,{}[\]\-\/_+=!@#$:%\.\^&*|\']*/', '', $promo_id_raw);
+          $promo_code_data['promo_id'] = $promo_id;
+
+          return $promo_code_data;
+        }
+      }
+      libxml_use_internal_errors(false);
+
+      $promo_code_data['promo_id'] = 'unknown promo';
 
       return $promo_code_data;
     }
