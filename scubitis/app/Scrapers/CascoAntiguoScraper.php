@@ -12,7 +12,7 @@ class CascoAntiguoScraper extends WebScraper
     $html=parent::getHTMLByURL($url);
 
     //img/stickers/8/stickerblackgrande.gif
-
+    //if(preg_match('/\/img\/stickers\/8\/stickerblackgrande.gif/', $html))
     if(preg_match('/\/img\/stickers\/8\/stickerblackgrande.gif/', $html))
     {
       $promo_code_data['promo_id'] = 'FRIDIVE 12%';

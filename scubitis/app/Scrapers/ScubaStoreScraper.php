@@ -23,7 +23,7 @@ class ScubaStoreScraper extends WebScraper
       {
         $promo_code_data = array();
         $promo_id_raw = strip_tags($dom->saveXML($div, LIBXML_NOEMPTYTAG));
-        $promo_id = preg_replace('/[^a-zA-Z0-9? ><;,{}[\]\-\/_+=!@#$%\.\^&*|\']*/', '', $promo_id_raw);
+        $promo_id = preg_replace('/[^a-zA-Z0-9? ><;,{}[\]\-\/_+=!@#$:%\.\^&*|\']*/', '', $promo_id_raw);
         $promo_code_data['promo_id'] = $promo_id;
         $promo_code_data['website'] = $this->website_name;
 

@@ -48,7 +48,7 @@ class GetPromoCodeByURL extends Command
     }
     else
     {
-      print("Unable to fetch product info based on this URL");
+      print("Unable to fetch promo info based on this URL");
     }
   }
 }
