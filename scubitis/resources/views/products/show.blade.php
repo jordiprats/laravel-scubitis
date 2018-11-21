@@ -17,7 +17,14 @@
                     <h2>Description</h2>
                     {{ $product->description }}
 
-                    <h2>Prices</h2>
+                    <h2>Current prices</h2>
+                    <ul>
+                    @foreach($product->latestwebprices as $webprice)
+                      <li><a href="{{ $webprice->url }}">{{ $webprice->website }}</a>: {{ $webprice->price }}</li>
+                    @endforeach
+                    </ul>
+
+                    <h2>Prices history</h2>
                     <ul>
                       <li>Current minimun price: {{ $product->currentminwebprice->price }} by <a href="{{ $product->currentminwebprice->url }}">{{ $product->currentminwebprice->website }}</a> on {{ $product->currentminwebprice->data }}</li>
                       <li>Minimun price: {{ $product->minwebprice->price }} by <a href="{{ $product->minwebprice->url }}">{{ $product->minwebprice->website }}</a> on {{ $product->minwebprice->data }}</li>
@@ -25,6 +32,8 @@
                       <li>Average price: {{ $product->averageprice }}</li>
                       {{-- on <a href="{{ $product->minwebprice->url }}">{{ $product->minwebprice->website }}</a> - {{ $product->minwebprice->data }} --}}
                     </ul>
+
+                    <h2>Chart</h2>
                     <div>
                       {!! $chart->container() !!}
                     </div>

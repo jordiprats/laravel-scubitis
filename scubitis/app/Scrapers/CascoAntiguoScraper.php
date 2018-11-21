@@ -28,14 +28,14 @@ class CascoAntiguoScraper extends WebScraper
     foreach ($scripts as $script)
     {
       $data_script = $dom->saveXML($script, LIBXML_NOEMPTYTAG);
-      Log::info($data_script);
+      //Log::info($data_script);
 
       if(
           (preg_match('/div\.product-cover/', $data_script)) &&
           (preg_match('/\/img\/stickers\/8\/stickerblackgrande.gif/', $data_script))
         )
         {
-          Log::info('found');
+          //Log::info('found');
           $promo_code_data['website'] = $this->website_name;
           $promo_code_data['promo_id'] = 'unknown promo';
 
@@ -52,7 +52,7 @@ class CascoAntiguoScraper extends WebScraper
               $promo_id = preg_replace('/[^a-zA-Z0-9? ><;,{}[\]\-\/_+=!@#$:%\.\^&*|\']*/', '', $promo_id_raw);
               $promo_code_data['promo_id'] = $promo_id;
 
-              Log::info($promo_id);
+              //Log::info($promo_id);
               libxml_use_internal_errors(false);
               return $promo_code_data;
             }

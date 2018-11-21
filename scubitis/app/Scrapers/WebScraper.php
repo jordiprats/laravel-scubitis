@@ -46,7 +46,7 @@ abstract class WebScraper
     if(!isset($cached_urls[$url]))
     {
       $user_agent = $this->getRandomUserAgent();
-      Log::info($user_agent);
+      //Log::info($user_agent);
       $c = curl_init($url);
       curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
       curl_setopt($c, CURLOPT_USERAGENT, $user_agent);

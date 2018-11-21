@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 
@@ -21,10 +22,20 @@ class Product extends Model
     return $this->hasMany(WebPrice::class);
   }
 
+  public function getLatestwebpricesAttribute()
+  {
+    $collection = collect();
+    $websites= WebPrice::distinct()->select('website')->where([ ['product_id', '=', $this->id] ])->groupBy('website')->get();
+    foreach($websites as $website)
+    {
+      $collection->push(WebPrice::where([ ['product_id', '=', $this->id], [ 'website', '=', $website->website ] ])->orderBy('data', 'DESC')->first());
+    }
+    return $collection->sortBy('price');
+  }
+
   public function getCurrentminwebpriceAttribute()
   {
-    $numero_web_prices = WebPrice::distinct()->select('website')->where([ ['product_id', '=', $this->id] ])->count();
-    return WebPrice::where([ ['product_id', '=', $this->id] ])->orderBy('data', 'DESC')->limit($numero_web_prices)->get()->sortBy('price')->first();
+    return $this->latestwebprices->firstWhere('price', $this->latestwebprices->min('price'));
   }
 
   public function getMinwebpriceAttribute()
