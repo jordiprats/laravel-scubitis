@@ -21,7 +21,7 @@
                     <h2>Current prices</h2>
                     <ul>
                     @foreach($product->latestwebprices as $webprice)
-                      <li><a href="{{ $webprice->url }}">{{ $webprice->website }}</a>: {{ $webprice->price }}</li>
+                      <li><a href="{{ $webprice->url }}">{{ $webprice->website }}</a>: {{ $webprice->price }} (-{{ $webprice->discount }}%)</li>
                     @endforeach
                     </ul>
 
