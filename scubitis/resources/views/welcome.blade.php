@@ -4,6 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
+            @include('layouts.search')
             <div class="card">
                 <div class="card-header"><h1>{{ __('Dashboard') }}</h1></div>
 
@@ -21,15 +22,7 @@
 
                     <hr />
 
-                    {{ Form::open(['method' => 'GET', 'route' => ['products.search']]) }}
 
-                    <div class="form-group">
-                      {{ Form::label('q', 'Search products') }}
-                      {{ Form::text('q', '', ['size'=>'100x1']) }}
-                    </div>
-
-                    {{ Form::submit('Search', array('class'=>'btn-info btn-lg')) }}
-                    {{ Form::close() }}
 
                 </div>
             </div>
