@@ -5,12 +5,13 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
+          @include('layouts.search')
             <div class="card">
                 <div class="card-header"><h1>NOT FOUND</h1></div>
 
                 <div class="card-body">
 <pre>
-* * * * * * * * * * * * * * * * * * * * * * * * * 
+* * * * * * * * * * * * * * * * * * * * * * * * *
 *                                               *
 * /     \             \            /    \       *
 *|       |             \          |      |      *
@@ -34,7 +35,7 @@
 *   |         / /      \__/\___/    |          |*
 *  |           /        |    |       |         |*
 *  |          |         |    |       |         |*
-* * * * * * * * * * * * * * * * * * * * * * * * * 
+* * * * * * * * * * * * * * * * * * * * * * * * *
 </pre>
                 </div>
             </div>

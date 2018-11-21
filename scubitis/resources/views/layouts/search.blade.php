@@ -5,7 +5,7 @@
     <div class="input-group">
       {{ Form::text('q', '', ['size'=>'100x1', 'class'=> 'form-control']) }}
 
-      <span class="input-group-append input-group-btn">{{ Form::submit('Search', array('class'=>'btn btn-default')) }}</span>
+      <span class="input-group-append input-group-btn">{{ Form::submit('Search', array('class'=>'btn btn-dark')) }}</span>
     </div>
   {{ Form::close() }}
   </div>
