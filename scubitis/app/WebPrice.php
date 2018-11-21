@@ -12,4 +12,9 @@ class WebPrice extends Model
   {
     return $this->belongsTo(Product::class);
   }
+
+  public function getDiscountAttribute()
+  {
+    return round(100.0-((double)$this->price/(double)WebPrice::where([ ['product_id', '=', $this->product_id], [ 'website', '=', $this->website ] ])->max('price'))*100.0, 2);
+  }
 }

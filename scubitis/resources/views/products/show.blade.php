@@ -27,7 +27,7 @@
 
                     <h2>Prices history</h2>
                     <ul>
-                      <li>Current minimun price: {{ $product->currentminwebprice->price }} by <a href="{{ $product->currentminwebprice->url }}">{{ $product->currentminwebprice->website }}</a> on {{ $product->currentminwebprice->data }}</li>
+                      <li>Current minimun price: {{ $product->currentminwebprice->price }} (-{{ $product->currentminwebprice->discount }}%) by <a href="{{ $product->currentminwebprice->url }}">{{ $product->currentminwebprice->website }}</a> on {{ $product->currentminwebprice->data }}</li>
                       <li>Minimun price: {{ $product->minwebprice->price }} by <a href="{{ $product->minwebprice->url }}">{{ $product->minwebprice->website }}</a> on {{ $product->minwebprice->data }}</li>
                       <li>Maximum price: {{ $product->maxwebprice->price }} by <a href="{{ $product->maxwebprice->url }}">{{ $product->maxwebprice->website }}</a> on {{ $product->maxwebprice->data }}</li>
                       <li>Average price: {{ $product->averageprice }}</li>
