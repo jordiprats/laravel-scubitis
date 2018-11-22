@@ -24,7 +24,7 @@ class Product extends Model
 
   public function getGlobaldiscountAttribute()
   {
-    return round(100.0-((double)$this->minwebprice->price/(double)WebPrice::where([ ['product_id', '=', $this->id] ])->max('price'))*100.0, 2);
+    return round(-100.0+((double)$this->minwebprice->price/(double)WebPrice::where([ ['product_id', '=', $this->id] ])->max('price'))*100.0, 2);
   }
 
 
