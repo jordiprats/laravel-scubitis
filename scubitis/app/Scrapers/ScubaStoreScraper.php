@@ -27,6 +27,10 @@ class ScubaStoreScraper extends WebScraper
         $promo_code_data['promo_id'] = $promo_id;
         $promo_code_data['website'] = $this->website_name;
 
+        //<span id="precio_anterior">20€</span>
+        //<span id="precio_anterior">€</span>
+        //si ja te descompte no aplica
+
         return $promo_code_data;
       }
     }
