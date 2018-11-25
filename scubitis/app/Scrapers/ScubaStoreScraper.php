@@ -27,10 +27,25 @@ class ScubaStoreScraper extends WebScraper
         $promo_code_data['promo_id'] = $promo_id;
         $promo_code_data['website'] = $this->website_name;
 
-        //<span id="precio_anterior">20€</span>
-        //<span id="precio_anterior">€</span>
-        //si ja te descompte no aplica
+        $spans = $dom->getElementsByTagName('span');
+        foreach ($spans as $span)
+        {
+          if($div->getAttribute('id')=='precio_anterior')
+          {
+            //<span id="precio_anterior">20€</span>
+            //<span id="precio_anterior">€</span>
+            //si ja te descompte no aplica
+            $preu_anterior = strip_tags($dom->saveXML($span, LIBXML_NOEMPTYTAG));
 
+            if(preg_match('/[0-9]/', $preu_anterior))
+            {
+              libxml_use_internal_errors(false);
+              return null;
+            }
+          }
+        }
+
+        libxml_use_internal_errors(false);
         return $promo_code_data;
       }
     }
