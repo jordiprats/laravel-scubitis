@@ -32,7 +32,10 @@ class CascoAntiguoScraper extends WebScraper
 
       if(
           (preg_match('/div\.product-cover/', $data_script)) &&
-          (preg_match('/\/img\/stickers\/8\/stickerblackgrande.gif/', $data_script))
+          (
+            (preg_match('/\/img\/stickers\/8\/stickerblackgrande.gif/', $data_script)) ||
+            (preg_match('/\/img\/stickers\/10\/sticker_selec_diver_cod.gif/', $data_script))
+          )
         )
         {
           //Log::info('found');
@@ -103,6 +106,15 @@ class CascoAntiguoScraper extends WebScraper
         if($meta->getAttribute('property')=='product:price:currency')
           $product_data['currency'] = $meta->getAttribute('content');
       }
+
+
+      $product_data['available']=true;
+
+      $is = $dom->getElementsByTagName('i');
+      foreach ($is as $i)
+        if($i->getAttribute('class')=='material-icons product-unavailable')
+          $product_data['available']=false;
+
 
       libxml_use_internal_errors(false);
 

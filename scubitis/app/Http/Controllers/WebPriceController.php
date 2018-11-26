@@ -35,7 +35,7 @@ class WebPriceController extends Controller
     {
       $promo_code = PromoCode::where(['promo_id' => $promo_code_data['promo_id'], 'website' => $promo_code_data['website']])->first();
 
-      if($promo_code && $promo_code->discount && $promo_code->discount > 0 && $promo_code->discount < 100)
+      if($promo_code && $promo_code->discount && $promo_code->discount > 0 && $promo_code->discount < 100 && $product_data['price'])
       {
         $product_data['price'] -= ($product_data['price'] / 100)*$promo_code->discount;
       }
@@ -43,7 +43,7 @@ class WebPriceController extends Controller
 
     $product_data['price'] = round(doubleval($product_data['price']),2);
 
-    $webprice = WebPriceController::createOrUpdate($url, $product_id, $product_data['price'], $product_data['currency'], $product_data['website']);
+    $webprice = WebPriceController::createOrUpdate($url, $product_id, $product_data['price'], $product_data['currency'], $product_data['website'], $product_data['available']);
 
     return $webprice;
   }

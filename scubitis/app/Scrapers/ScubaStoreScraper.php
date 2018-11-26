@@ -2,6 +2,8 @@
 
 namespace App\Scrapers;
 
+use Illuminate\Support\Facades\Log;
+
 class ScubaStoreScraper extends WebScraper
 {
   public $cached_products = array();
@@ -27,15 +29,20 @@ class ScubaStoreScraper extends WebScraper
         $promo_code_data['promo_id'] = $promo_id;
         $promo_code_data['website'] = $this->website_name;
 
-        $spans = $dom->getElementsByTagName('span');
+        $dom_spans = new \DOMDocument();
+        $dom_spans->loadHTML($html);
+        $spans = $dom_spans->getElementsByTagName('span');
+        Log::info(count($spans));
         foreach ($spans as $span)
         {
-          if($div->getAttribute('id')=='precio_anterior')
+          if($span->getAttribute('id')=='precio_anterior')
           {
             //<span id="precio_anterior">20€</span>
             //<span id="precio_anterior">€</span>
             //si ja te descompte no aplica
-            $preu_anterior = strip_tags($dom->saveXML($span, LIBXML_NOEMPTYTAG));
+            $preu_anterior = strip_tags($dom_spans->saveXML($span, LIBXML_NOEMPTYTAG));
+
+            Log::info($preu_anterior);
 
             if(preg_match('/[0-9]/', $preu_anterior))
             {
@@ -99,16 +106,38 @@ class ScubaStoreScraper extends WebScraper
         if($meta->getAttribute('itemprop')=='priceCurrency')
           $product_data['currency'] = $meta->getAttribute('content');
 
-        //TODO - categoria
+        //TODO - altres
+        // <meta itemprop="brand" content="Aqualung">
+				// <meta itemprop="name" content="Aqualung Legend LX Supreme ACD DIN">
+
+
       }
 
-      libxml_use_internal_errors(false);
-
       $product_data['website'] = $this->website_name;
+
+      $product_data['available']=isset($product_data['price']);
 
       $cached_products[$url] = $product_data;
     }
 
+    $inputs = $dom->getElementsByTagName('input');
+    foreach ($inputs as $input)
+    {
+      //TODO - categoria
+      // <input type="hidden" name="category" id="category" value="regulators / regulators set" data-ta-layer="category"/>
+      // <input type="hidden" name="subcategory" id="subcategory" value="regulators set" data-ta-layer="subcategory"/>
+      if($input->getAttribute('name')=='subcategory')
+        $product_data['category_name'] = $input->getAttribute('value');
+
+      // preu producte no disponible
+      // <input type="hidden" name="productFinalPrice" id="productFinalPrice" value="454.95" data-ta-layer="productFinalPrice"/>
+      if($input->getAttribute('name')=='productFinalPrice')
+        if(!$product_data['available'])
+          $product_data['price'] = $input->getAttribute('value');
+
+    }
+
+    libxml_use_internal_errors(false);
     return $cached_products[$url];
   }
 }

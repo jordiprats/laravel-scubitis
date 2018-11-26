@@ -54,6 +54,7 @@ class ProductController extends Controller
 
   public static function createOrUpdateProductByURL($url)
   {
+    Log::info($url);
     $scraper = WebScraper::getWebScraper($url);
 
     $product_data = $scraper->productDataArrayByURL($url);
@@ -89,7 +90,7 @@ class ProductController extends Controller
       }
     }
 
-    $webprice = WebPriceController::createOrUpdate($url, $product->id, $product_data['price'], $product_data['currency'], $product_data['website']);
+    $webprice = WebPriceController::createOrUpdate($url, $product->id, $product_data['price'], $product_data['currency'], $product_data['website'], $product_data['available']);
 
     return $product;
   }
@@ -106,7 +107,7 @@ class ProductController extends Controller
     return $output;
   }
 
-  public static function createOrUpdate(string $title, string $description = null, $category_id = null, $image_url = null)
+  public static function createOrUpdate(string $title, string $description = null, $category_id = null, $image_url = null, $available = true)
   {
     $product = Product::where(['title_strcmp' => ProductController::toStrCmp($title)])->first();
 
@@ -118,6 +119,7 @@ class ProductController extends Controller
         'description'  => $description,
         'image_url'    => $image_url,
         'category_id'  => $category_id,
+        'available'    => $available,
       ]);
     }
     else
